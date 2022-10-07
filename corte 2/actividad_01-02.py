@@ -1,4 +1,5 @@
 #Rafael Alejandro Aguilar Mota
+#uso semaforos y lo rompo :/
 import queue
 import threading
 import time
