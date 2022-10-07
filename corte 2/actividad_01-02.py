@@ -6,7 +6,6 @@ import time
 import random
 
 q = queue.Queue(maxsize=0)
-
 class Producer():
     def __init__(self, q, p_load):
         self.q = q
@@ -39,7 +38,7 @@ class Consumer():
             if not self.q.empty():
                 try:
                     item = self.q.get()
-                    print(f"{t_name} consumed item : {item}".format(item))
+                    print(f"{t_name} consumed item: {item}".format(item))
                     sys.stdout.flush()
                 except queue.Empty:
                     if event.is_set():
@@ -62,7 +61,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
