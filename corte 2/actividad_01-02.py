@@ -1,7 +1,6 @@
 #Rafael Alejandro Aguilar Mota
 import queue
 import threading
-import sys
 import time
 import random
 
@@ -9,8 +8,7 @@ q = queue.Queue(maxsize=0)
 class Producer():
     def __init__(self, q, p_load):
         self.q = q
-        self.p_load = p_load
-        sys.stdout.flush()
+        self.p_load = p_load       
 
     def run(self, event):
         t_name = threading.current_thread().name
@@ -19,17 +17,15 @@ class Producer():
                 print('producer: cola llena')
                 time.sleep(2)
             item = random.randint(0,999)
-            print(f"{t_name} generated item {item}")
-            sys.stdout.flush()
+            print(f"{t_name} generated item {item}")           
             self.q.put(item)
             time.sleep(0.5)
         print(f'*** producer {t_name} finished work')
-        sys.stdout.flush()
+        
         event.set()
 
 class Consumer():
-    def __init__(self, q):
-        sys.stdout.flush()
+    def __init__(self, q):        
         self.q = q
 
     def run(self, event):
@@ -38,16 +34,14 @@ class Consumer():
             if not self.q.empty():
                 try:
                     item = self.q.get()
-                    print(f"{t_name} consumed item: {item}".format(item))
-                    sys.stdout.flush()
+                    print(f"{t_name} consumed item: {item}".format(item))                   
                 except queue.Empty:
                     if event.is_set():
                         break
             elif event.is_set():
                 break
         print(f'*** consumer {t_name} finished work')
-        sys.stdout.flush()
-
+        
 producer = Producer(q, 10)
 consumer = Consumer(q)
 e = threading.Event()
